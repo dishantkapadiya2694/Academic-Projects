@@ -188,4 +188,4 @@ python pacman.py -l bigSearch -p ClosestDotSearchAgent -z .5
 ```
 
 #ADDITIONAL DETAILS
-For information, visit this [webpage](http://www.ccs.neu.edu/home/rplatt/cs5100_2015/pa1/hw_asst1.html)
+For more information regarding this assignment, visit this [webpage](http://www.ccs.neu.edu/home/rplatt/cs5100_2015/pa1/hw_asst1.html)
