@@ -1,0 +1,30 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname q4) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
+(require rackunit)
+(require "extras.rkt")
+(provide string-insert)
+;;;DATA DESIGN: no data design required
+;;;
+;;;string-insert: String Int -> String
+;;;GIVEN: string and postion where '_' is to be added
+;;;RETURNS: string with '_' inserted at desired position
+;;;
+;;;EXAMPLES: (string-insert "Northeastern" 5) = "North_eastern"
+;;;          (string-insert "University" 0) = "_University"
+;;;          (string-insert "Boston" 6) = "Boston_"
+;;;          (string-insert "" 0) = "_"
+;;;
+;;;DESIGN STRATEGY: combine simpler functions
+;;;
+;;;FUNCTION DESIGN :-
+(define (string-insert str i)
+   (string-append (substring str 0 i) "_" (substring str i)));combine substring before ith character, '_' character and rest of the substring
+;;;
+;;;TESTS:-
+(check-expect (string-insert "Northeastern" 5) "North_eastern")
+(check-expect (string-insert "University" 0) "_University")
+(check-expect (string-insert "Boston" 6) "Boston_")
+(check-expect (string-insert "" 0) "_")
+;;;
+;;;PROGRAM REVIEW: This program can handle insert in empty string. We always assume that value of i is between 0 and length of the string. In case of empty string, it enters at 0. 

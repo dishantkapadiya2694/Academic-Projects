@@ -1,0 +1,63 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname fsm) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
+;;;2:12
+(require rackunit)
+(require "extras.rkt")
+;;;initial-state : Number -> State
+;;;GIVEN: a number
+;;;RETURNS: a representation of the initial state
+;;;of your machine.  The given number is ignored.
+;;;
+;;;next-state : State MachineInput -> State
+;;;GIVEN: a state of the machine and a machine input
+;;;RETURNS: the state that should follow the given input.
+;;;
+;;;accepting-state? : State -> Boolean
+;;;GIVEN: a state of the machine
+;;;RETURNS: true iff the given state is a final (accepting) state
+;;;
+;;;error-state? : State -> Boolean
+;;;GIVEN: a state of the machine
+;;;RETURNS: true iff there is no path (empty or non-empty) from the given
+;;;state to an accepting state
+
+(define (initial-state num)
+  "q0")
+
+(define (next-state state machine-input)
+  (cond
+    [(string=? state "q0")
+     (cond
+       [(string=? machine-input "a") "q0"]
+       [(string=? machine-input "b") "q0"]
+       [(string=? machine-input "c") "q1"]
+       [else "q4"])]
+    
+    [(string=? state "q1")
+     (cond
+       [(string=? machine-input "a") "q1"]
+       [(string=? machine-input "b") "q1"]
+       [(string=? machine-input "d") "q2"]
+       [else "q4"])]
+    
+    [(string=? state "q2")
+     (cond
+       [(string=? machine-input "e") "q2"]
+       [(string=? machine-input "f") "q2"]
+       [else "q4"])]
+    )
+  )
+
+(define (accepting-state? state)
+  (if (string=? state "q2")
+      true
+      false))
+
+(define (error-state? state)
+  (if (string=? state "q3")
+      true
+      false))
+
+(begin-for-test
+(check-equals? (accepting-state? (next-state (next-state (initial-state 45) c) d)) true))

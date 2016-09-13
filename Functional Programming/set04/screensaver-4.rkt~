@@ -1,0 +1,243 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname screensaver-4) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
+(require rackunit)
+(require "extras.rkt")
+
+(require 2htdp/image)
+(require 2htdp/universe)
+
+
+
+
+(define-struct rect (x y vx vy selected? mx my ox oy pen-down?))
+(define-struct world (rects dots paused?))
+(define-struct dot (x y))
+
+
+(define (screensaver speed)
+  (big-bang (initial-world 35)
+            (on-tick world-after-tick speed)
+            (on-key world-after-key-event)
+            (on-draw world-to-scene)
+            (on-mouse world-after-mouse-event)
+            ))
+
+
+(define CANVAS-WIDTH 400)
+(define CANVAS-HEIGHT 300)
+(define EMPTY-CANVAS (empty-scene CANVAS-WIDTH CANVAS-HEIGHT))
+(define RECTANGLE-WIDTH 60)
+(define RECTANGLE-HEIGHT 50)
+(define POS-RECT-X 0)
+(define POS-RECT-Y 0)
+(define CIRCLE (circle 5 "outline" "red"))
+(define RECT-IMAGE-UNSEL (rectangle RECTANGLE-WIDTH RECTANGLE-HEIGHT "outline" "blue"))
+(define RECT-IMAGE-SEL (rectangle RECTANGLE-WIDTH RECTANGLE-HEIGHT "outline" "red"))
+(define RECTANGLE-WIDTH-HALF 30)
+(define RECTANGLE-HEIGHT-HALF 25)
+(define RECT-BOUNDARY-X-MAX (- CANVAS-WIDTH RECTANGLE-WIDTH-HALF))
+(define RECT-BOUNDARY-Y-MAX (- CANVAS-HEIGHT RECTANGLE-HEIGHT-HALF))
+(define RECT-BOUNDARY-X-MIN (+ 0 RECTANGLE-WIDTH-HALF))
+(define RECT-BOUNDARY-Y-MIN (+ 0 RECTANGLE-HEIGHT-HALF))
+
+
+
+(define (initial-world num)
+  (make-world empty empty true))
+
+
+
+(define (rect-with-text r)
+  (if (rect-selected? r)
+      (overlay/align "center" "center" RECT-IMAGE-SEL
+                     (text (string-velocity (rect-vx r) (rect-vy r)) 11 "red"))
+      (overlay/align "center" "center" RECT-IMAGE-UNSEL
+                     (text (string-velocity (rect-vx r) (rect-vy r)) 11 "blue"))))
+
+
+
+(define (new-rectangle x y vx vy)
+  (make-rect x y vx vy false 0 0 0 0 false))
+
+(define (world-after-key-event w kev)
+  (cond
+    [(key=? kev " ")
+     (if (world-paused? w)
+         (make-world (world-rects w) (world-dots w) false)
+         (make-world (world-rects w) (world-dots w) true))]
+    [(key=? kev "n")
+     (make-world (cons INIT-RECT (world-rects w)) (world-dots w) (world-paused? w))]
+    [else
+     (make-world (keys-update-rects (world-rects w) kev) (world-dots w) (world-paused? w))]))
+
+
+(define (keys-update-rects lor kev)
+  (cond
+    [(empty? lor) empty]
+    [else
+     (if (rect-selected? (first lor))
+         (cons (rect-after-key-event (first lor) kev)
+               (keys-update-rects (rest lor) kev))
+         (cons (first lor) (keys-update-rects (rest lor) kev)))]))
+
+
+(define (rect-after-key-event r kev)
+  (cond
+    [(key=? kev "up")
+     (update-velocity-y r -2)]
+    [(key=? kev "down")
+     (update-velocity-y r +2)]
+    [(key=? kev "left")
+     (update-velocity-x r -2)]
+    [(key=? kev "right")
+     (update-velocity-x r +2)]
+    [else r]))
+
+
+(define (update-velocity-x r vel)
+  (make-rect (rect-x r) (rect-y r) (+ vel (rect-vx r)) (rect-vy r) (rect-selected? r)
+             (rect-mx r) (rect-my r) (rect-ox r) (rect-oy r) (rect-pen-down r)))
+
+(define (update-velocity-y r vel)
+  (make-rect (rect-x r) (rect-y r) (rect-vx r) (+ vel (rect-vy r)) (rect-selected? r)
+             (rect-mx r) (rect-my r) (rect-ox r) (rect-oy r) (rect-pen-down r)))
+
+
+(define (string-velocity a b)
+  (string-append "(" (number->string a) "," (number->string b) ")"))
+
+
+
+(define (position-x r)
+  (rect-x r))
+
+(define (position-y r)
+  (rect-y r))
+
+
+
+
+(define INIT-RECT (make-rect 200 150 0 0 false 0 0 0 0 false))
+
+
+(define (place-rect r c)
+  (if (rect-selected? r)
+      (place-image CIRCLE (rect-mx r) (rect-my r) 
+                   (place-image (rect-with-text r) (position-x r) (position-y r) c))
+      (place-image (rect-with-text r) (position-x r) (position-y r) c)))
+
+
+
+(define (display-world lor)
+  (cond
+    [(empty? lor) EMPTY-CANVAS]
+    [else
+     (place-rect (first lor) (display-world (rest lor)))]))
+
+
+(define (world-to-scene w)
+  (display-world (world-rects w)))
+
+
+
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Mouse Events
+
+(define (world-after-mouse-event w mx my mev)
+  (make-world (mouse-update-rects (world-rects w) mx my mev)
+              (world-dots w) (world-paused? w)))
+
+(define (mouse-update-rects lor mx my mev)
+  (cond
+    [(empty? lor) empty]
+    [else
+     (cons (rect-after-mouse-event (first lor) mx my mev)
+           (mouse-update-rects (rest lor) mx my mev))]))
+
+(define (rect-after-mouse-event r mx my mev)
+  (cond
+    [(mouse=? mev "button-down") (rect-after-mouse-down r mx my)]
+    [(mouse=? mev "drag") (rect-after-drag r mx my)]
+    [(mouse=? mev "button-up") (rect-after-mouse-up r mx my)]
+    [else r]))
+
+(define (rect-after-mouse-up r mx my)
+  (make-rect (rect-x r) (rect-y r) (rect-vx r) (rect-vy r) false 0 0 0 0 (rect-pen-down r)))
+
+(define (rect-after-drag r mx my)
+  (if (and (in-rect? r mx my) (rect-selected? r))
+      (make-rect (+ (rect-ox r) mx) (+ (rect-oy r) my) (rect-vx r) (rect-vy r)
+                 true mx my (rect-ox r) (rect-oy r) false)
+      r))
+
+(define (rect-after-mouse-down r mx my)
+  (if (in-rect? r mx my)
+      (make-rect (rect-x r) (rect-y r) (rect-vx r) (rect-vy r) true mx my
+                 (- (rect-x r) mx) (- (rect-y r) my) (rect-pen-down r))
+      r))
+
+(define (in-rect? r mx my)
+  (and
+   (<= 
+    (- (rect-x r) RECTANGLE-WIDTH-HALF)
+    mx
+    (+ (rect-x r) RECTANGLE-WIDTH-HALF))
+   (<= 
+    (- (rect-y r) RECTANGLE-HEIGHT-HALF)
+    my
+    (+ (rect-y r) RECTANGLE-HEIGHT-HALF))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define (world-after-tick w)
+  (if (world-paused? w) 
+      w
+      (make-world (new-rects (world-rects w)) (world-dots w) false)))
+
+(define (new-rects lor)
+  (cond
+    [(empty? lor) empty]
+    [else
+     (cons (update-rect (first lor)) (new-rects (rest lor)))]))
+
+(define (update-rect r)
+  (if (rect-selected? r)
+      r
+      (new-rectangle (new-x (rect-x r) (rect-vx r))
+                     (new-y (rect-y r) (rect-vy r))
+                     (if (hits-x-wall? (rect-x r) (rect-vx r))
+                         (- 0 (rect-vx r)) (rect-vx r))
+                     (if (hits-y-wall? (rect-y r) (rect-vy r))
+                         (- 0 (rect-vy r)) (rect-vy r)))
+      ))
+
+(define (hits-x-wall? x vx)
+  (cond
+    [(>= (+ x vx) RECT-BOUNDARY-X-MAX) true]
+    [(<= (+ x vx) RECT-BOUNDARY-X-MIN) true]
+    [else false]))
+
+(define (hits-y-wall? y vy)
+  (cond
+    [(>= (+ y vy) RECT-BOUNDARY-Y-MAX) true]
+    [(<= (+ y vy) RECT-BOUNDARY-Y-MIN) true]
+    [else false]))
+
+(define (new-x x vx)
+  (cond
+    [(>= (+ x vx) RECT-BOUNDARY-X-MAX) RECT-BOUNDARY-X-MAX]
+    [(<= (+ x vx) RECT-BOUNDARY-X-MIN) RECT-BOUNDARY-X-MIN]
+    [else (+ x vx)]))
+
+(define (new-y y vy)
+  (cond
+    [(>= (+ y vy) RECT-BOUNDARY-Y-MAX) RECT-BOUNDARY-Y-MAX]
+    [(<= (+ y vy) RECT-BOUNDARY-Y-MIN) RECT-BOUNDARY-Y-MIN]
+    [else (+ y vy)]))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(screensaver 0.5)

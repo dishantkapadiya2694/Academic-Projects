@@ -1,0 +1,8 @@
+- use ClassRoster
+- use better name for function
+- line 167 - contract doesnt match the lambda function
+- missing strategy
+
+D - A
+P - A
+C - 15

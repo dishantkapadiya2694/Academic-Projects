@@ -1,0 +1,30 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname q2) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
+(require rackunit)
+(require "extras.rkt")
+(provide string-first)
+;;;DATA DESIGN: no data design required
+;;;
+;;;string-first: String -> 1String
+;;;GIVEN: a string values
+;;;RETURNS: a 1String extracted from string
+;;;
+;;;EXAMPLES: (string-first "Northeastern") = "N"
+;;;          (string-first "\tUniversity") = "\t"
+;;;          (string-first " Boston") = " "
+;;;
+;;;DESIGN STRATEGY: combine simpler functions
+;;;
+;;;FUNCTION DESIGN:-
+(define (string-first str)
+  (string-ith str 0)) ;characters like " ", "\t" , "\b", "\n", "\r" are interpreted as single character though it has 2 symbols. So, extracting character at 0th position works
+;;;
+;;;TESTS:-
+(begin-for-test
+  (check-equal? (string-first "Northeastern") "N")
+  (check-equal? (string-first "\tUniversity") "\t")
+  (check-equal? (string-first " Boston") " ")
+  )
+;;;
+;;;PROGRAM REVIEW: this program efficiently extracts the first character and returns it in form of 1String.

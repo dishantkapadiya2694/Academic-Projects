@@ -1,0 +1,14 @@
+TA Name:- Vishesh
+Helper Name:- Kevin
+
+Design Grade:-A
+Presentation Grade:-A
+Correctness Score:-15
+
+Design Grade:-A
+Presentation Grade:-A
+Correctness Score:-15
+
+Notes:-
+- could have used set-difference instead of using non-teammates
+-

@@ -1,0 +1,39 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname editor) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
+(require 2htdp/image)
+(require 2htdp/universe)
+
+
+(define-struct editor [pre post])
+
+(define (edit ed ke)
+  (cond
+    [(key=? ke "\b")
+     (make-editor
+      (substring (editor-pre ed) 0 (- (string-length (editor-pre ed)) 1))
+      (editor-post ed))]
+    
+    [(key=? ke "left")
+     (make-editor
+      (substring (editor-pre ed) 0 (- (string-length (editor-pre ed)) 1))
+      (string-append (string-ith (editor-pre ed) (- (string-length (editor-pre ed)) 1)) (editor-post ed)))]
+
+    [(key=? ke "right")
+     (make-editor
+      (string-append (editor-pre ed) (string-ith (editor-post ed) 0))
+      (substring (editor-post ed) 1 (string-length (editor-post ed))))]
+
+    [else (make-editor (string-append (editor-pre ed) ke) (editor-post ed))]
+    )
+  )
+
+
+
+(define (display pre post)
+  (overlay/align "left" "center"
+                 (beside/align "center"
+                               (text pre 11 "black")
+                               (rectangle 1 16 "solid" "red")
+                               (text post 11 "black"))
+                 (empty-scene 200 20)))

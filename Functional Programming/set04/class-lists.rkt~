@@ -1,0 +1,57 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname class-lists) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
+(require rackunit)
+(require "extras.rkt")
+
+(require 2htdp/image)
+(require 2htdp/universe)
+
+(define-struct slip (color name1 name2))
+
+
+(define STUD0 (make-slip "yellow" "Dishant" "Kapadiya"))
+(define STUD1 (make-slip "yellow" "Paulomi" "Mahidharia"))
+(define STUD2 (make-slip "yellow" "Sanil" "Jain"))
+(define STUD3 (make-slip "yellow" "Sudeep" "Kulkarni"))
+(define STUD4 (make-slip "yellow" "Sushant" "Mimani"))
+(define STUD5 (make-slip "blue" "Naomi" "Joshi"))
+(define STUD6 (make-slip "blue" "Nitish" "Surana"))
+(define STUD7 (make-slip "blue" "Shraddha" "Satish"))
+(define STUD8 (make-slip "blue" "Anvita" "Surpaneni"))
+(define STUD9 (make-slip "blue" "Shikha" "Shah"))
+
+(define los STUD0 STUD1 STUD2 STUD3 STUD4 STUD5 STUD6 STUD7 STUD8 STUD9)
+
+
+;;;felleisen-roster : ListOfSlip -> ListOfSlip
+;;;GIVEN: a list of slips
+;;;RETURNS: a list of slips containing all the students in Professor
+;;;Felleisen's class, without duplication.
+
+
+;;;(find-duplicates
+
+
+(define (felleisten-roster los)
+  (cond
+    [(empty? los) empty]
+    [else
+     (if (string=? (slip-color (first los)) "yellow")
+         (cons (first los) (felleisten-roster (rest lor)))
+         (rest lor))]))
+
+
+
+;;;shivers-roster: ListOfSlip -> ListOfSlip
+;;;GIVEN: a list of slips
+;;;RETURNS: a list of slips containing all the students in Professor
+;;;Shivers' class, without duplication.
+
+(define (shivers-roster los)
+  (cond
+    [(empty? los) empty]
+    [else
+     (if (string=? (slip-color (first los)) "blue")
+         (cons (first los) (shivers-roster (rest lor)))
+         (rest lor))]))

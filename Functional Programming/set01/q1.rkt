@@ -1,0 +1,32 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname q1) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
+(require rackunit)
+(require "extras.rkt")
+(provide distance-to-origin)
+;;;DATA DESIGN: no data design required
+;;;
+;;;distance-to-origin: Real Real->Pos Real
+;;;GIVEN: 'x' and 'y' co-ordinates of the point 
+;;;RETURNS: scaler positive distance to origin from the given point
+;;;
+;;;EXAMPLES: (distance-to-origin 3 4) = 5
+;;;          (distance-to-origin -1.5 3.6) = 3.9
+;;;          (distance-to-origin -4 -9.7) = #i10.4923
+;;;          (distance-to-origin 5 -7) = #i8.6023
+;;;
+;;;DESIGN STRATEGY: combine simpler functions
+;;;
+;;;FUNCTION DESIGN :-
+(define (distance-to-origin x y)
+   (sqrt (+ (* x x) (* y y))))    ; Computes using distance formula of co-ordinate geometry
+;;;
+;;;TESTS:-
+(begin-for-test
+  (check-equal? (distance-to-origin 3 4) 5)
+  (check-equal? (distance-to-origin -1.5 3.6) 3.9)
+  (check-equal? (distance-to-origin -12 -5) 13)
+  (check-equal? (distance-to-origin 3.6 -1.5) 3.9)
+  )
+;;;
+;;;PROGRAM REVIEW: the program computes distance to origin for points from every quadrant and provide relevent answers.
