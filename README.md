@@ -1,9 +1,9 @@
 #**PROGRAM DESIGN PARADIGM**
 
 
-*CS5010 - NEU - FALL 2015*
-------
---------
+### [*CS5010 - NEU - FALL 2015*](www.google.com)
+***********
+***********
 #DESCRIPTION
 This course mainly focus on 2 goals:
 
@@ -14,13 +14,15 @@ Homework in this course is divided across 11 assignment. Each assignment goes fo
 
 <table border="0">
 <tr>
-<td width=200 valign="top">
+<td width=200 valign="top" halign="right">
 <b>Type of programs executed:</b>
 <td>User Interactive Animation, Graph Search, MVC using OOP in Scheme and features like Abstraction, Inheritence.
 <tr>
 </table>
 <br>
-<br>
-<br>
 #IMPLEMENTATION
-Programming Language used throughout the course is Racket
+Programming Language used throughout the course is Racket(formerly PLT Scheme). It is a general purpose, multi-paradigm programming language in the Lisp-Scheme family.
+
+<br>
+#USAGE
+Every file is well documented and describes its usage. Use this documentation to understand the code better. A basic understanding of language will help overcome trivial issues and doubts.
