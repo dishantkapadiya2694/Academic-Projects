@@ -180,3 +180,8 @@ Implement the function findPathToClosestDot in searchAgents.py. Our agent solves
 ```python
 python pacman.py -l bigSearch -p ClosestDotSearchAgent -z .5
 ```
+
+
+```{r, engine='bash', count_lines}
+wc -l en_US.twitter.txt 
+```
