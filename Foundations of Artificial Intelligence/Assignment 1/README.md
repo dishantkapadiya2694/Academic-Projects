@@ -1,5 +1,12 @@
-#BRIEF DESCRIPTION
 ***
+#OUTLINE
+1. [Brief Description](#brief-description)
+2. [Tasks](#tasks)
+3. [Additional Details](#additional-details)
+
+***
+
+#BRIEF DESCRIPTION
 
 In this project, your Pacman agent will find paths through his maze world, both to reach a particular location and to collect food efficiently. You will build general search algorithms and apply them to Pacman scenarios.
 
@@ -110,7 +117,6 @@ The code for this project consists of several Python files, some of which you wi
 python pacman.py
 ```
 #TASKS:
-***
 ###1. Finding a Fixed Food Dot using Depth First Search
 Implement DFS on Pacman and execute it find the food pallets using the same algorithm.<br>
 To execute, use one of the following commands.
@@ -181,7 +187,5 @@ Implement the function findPathToClosestDot in searchAgents.py. Our agent solves
 python pacman.py -l bigSearch -p ClosestDotSearchAgent -z .5
 ```
 
-
-```{r, engine='bash', count_lines}
-wc -l en_US.twitter.txt 
-```
+#ADDITIONAL DETAILS
+For information, visit this [webpage](http://www.ccs.neu.edu/home/rplatt/cs5100_2015/pa1/hw_asst1.html)
