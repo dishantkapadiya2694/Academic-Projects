@@ -99,8 +99,7 @@ The code for this project consists of several Python files, some of which you wi
             <td>Directory containing the test cases for each question</td>
           </tr>
           <tr>
-            <td><code>
-					searchTestClasses.py</code></td>
+            <td><code>searchTestClasses.py</code></td>
             <td>Project 1 specific autograding test classes</td>
           </tr>
         </tbody>
