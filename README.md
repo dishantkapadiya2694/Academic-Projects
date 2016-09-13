@@ -1,5 +1,5 @@
 #**PROGRAM DESIGN PARADIGM**
-### [*CS5010 - NEU - FALL 2015*](www.google.com)
+### [*CS5010 - NEU - FALL 2015*](http://www.ccs.neu.edu/course/cs5010f15/)
 ***********
 #DESCRIPTION
 This course mainly focus on 2 goals:
