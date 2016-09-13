@@ -33,12 +33,7 @@ viewer-controllers:</p>
 
 </ol>
 
-  <p>Here's a demonstration:</p>
-
-<p><center>
-<video src="http://www.ccs.neu.edu/course/cs5010f15/Problem%20Sets/Videos/11-mvc.mp4" controls />
-</center>
-</p>
+  <p>Here's a <a href="http://www.ccs.neu.edu/course/cs5010f15/Problem%20Sets/Videos/11-mvc.mp4">demonstration:</a></p>
 
 <p>Note that the first time I hit button-down inside the canvas of
 the XY controller, I accidently did so _at_ the particle location.
