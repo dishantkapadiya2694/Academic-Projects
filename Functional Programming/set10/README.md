@@ -2,26 +2,25 @@
 
 1. Your boss at the toy factory has been taking PDP, and he has been persuaded to buy a "framework" from WidgetWorks International. The framework was delivered as a file called WidgetWorks.rkt that provides three interfaces and one function, as follows:
 
-
-          (define StatefulWorld<%>
-          (interface ()
-
-          ; Widget<%> -> Void
-          ; GIVEN: A widget
-          ; EFFECT: add the given widget to the world
-          add-widget
-
-          ; SWidget -> Void
-          ; GIVEN: A stateful widget
-          ; EFFECT: add the given widget to the world
-          add-stateful-widget
-
-          ; PosReal -> Void
-          ; GIVEN: a framerate, in secs/tick
-          ; EFFECT: runs this world at the given framerate
-            run
-
-        ))
+	
+		(define StatefulWorld<%>
+			(interface ()
+		
+			; Widget<%> -> Void
+			; GIVEN: A widget
+			; EFFECT: add the given widget to the world
+			add-widget
+		
+			; SWidget -> Void
+			; GIVEN: A stateful widget
+			; EFFECT: add the given widget to the world
+			add-stateful-widget
+		
+			; PosReal -> Void
+			; GIVEN: a framerate, in secs/tick
+			; EFFECT: runs this world at the given framerate
+			run
+		))
 
 		;; Every functional object that lives in the world must implement the
 		;; Widget<%> interface.

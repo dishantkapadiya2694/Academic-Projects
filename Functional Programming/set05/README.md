@@ -13,19 +13,19 @@ Rewrite screensaver-4 to use higher-order functions whenever possible instead of
 The Registrar has heard about your excellent work with the absent-minded professors and so he asks you to solve the following problem:
 You are given a list of (student, class) pairs. Deliver a file called rosters.rkt that produces the class roster for each class that has at least one student enrolled. Here are more detailed specifications:
 
-                 A SetOfX is a list of X's without duplication.  Two SetOfX's are  
-                 considered equal if they have the same members.  
+     A SetOfX is a list of X's without duplication.  Two SetOfX's are  
+     considered equal if they have the same members.  
 
-                 Example: (list (list 1 2) (list 2 1)) is NOT a SetOfSetOfNumber,  
-                 because (list 1 2) and (list 2 1) represent the same set of numbers.   
+     Example: (list (list 1 2) (list 2 1)) is NOT a SetOfSetOfNumber,  
+     because (list 1 2) and (list 2 1) represent the same set of numbers.   
 
-                 An Enrollment is a (make-enrollment Student Class)  
-                 (make-enrollment s c) represents the assertion that student s is  
-                 enrolled in class c.  
+     An Enrollment is a (make-enrollment Student Class)  
+     (make-enrollment s c) represents the assertion that student s is  
+     enrolled in class c.  
 
-                 A ClassRoster is a (make-roster Class SetOfStudent)  
-                 (make-roster c ss) represents that the students in class c are exactly  
-                 the students in set ss.  
+     A ClassRoster is a (make-roster Class SetOfStudent)  
+     (make-roster c ss) represents that the students in class c are exactly  
+     the students in set ss.  
 
 Student is unspecified, but you may assume that students may be  
 compared for equality with equal?  
@@ -57,12 +57,12 @@ You are to provide the following functions:
 
 EXAMPLE:  
 
-       (enrollments-to-rosters  
-         (list (make-enrollment "John" "PDP")  
-               (make-enrollment "Kathryn" "Networks")  
-               (make-enrollment "Feng" "PDP")  
-               (make-enrollment "Amy" "PDP")  
-               (make-enrollment "Amy" "Networks")))  
+    (enrollments-to-rosters  
+     (list (make-enrollment "John" "PDP")  
+           (make-enrollment "Kathryn" "Networks")  
+           (make-enrollment "Feng" "PDP")  
+           (make-enrollment "Amy" "PDP")  
+           (make-enrollment "Amy" "Networks")))  
      =>  
       (list  
         (make-roster "PDP" (list "John" "Feng" "Amy"))  

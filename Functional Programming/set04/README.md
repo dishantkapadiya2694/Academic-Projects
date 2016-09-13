@@ -12,15 +12,15 @@ Here's a demo (0:53): [Click Here For Video Demo](http://www.ccs.neu.edu/course/
 
 You are to deliver a file named screensaver-3.rkt that provides all the functions of screensaver-2.rkt, plus the following:
 
-                 ;; world-rects : WorldState -> ListOfRectangle  
-                 ;; RETURNS: the specified attribute of the WorldState  
-                 ;; NOTE: this replaces world-rect1 and world-rect2.  
-                 ;; NOTE: if these are part of the world struct, you don't need to  
-                 ;; write any deliverables for these functions.  
+     ;; world-rects : WorldState -> ListOfRectangle  
+     ;; RETURNS: the specified attribute of the WorldState  
+     ;; NOTE: this replaces world-rect1 and world-rect2.  
+     ;; NOTE: if these are part of the world struct, you don't need to  
+     ;; write any deliverables for these functions.  
 
-                 ;; rect-after-key-event : Rectangle KeyEvent -> Rectangle  
-                 ;; RETURNS: the state of the rectangle that should follow the given  
-                 ;; rectangle after the given key event  
+     ;; rect-after-key-event : Rectangle KeyEvent -> Rectangle  
+     ;; RETURNS: the state of the rectangle that should follow the given  
+     ;; rectangle after the given key event  
 
 ## 2. screensaver-4.rkt 
 Your boss is so pleased with your work that he assigns you yet another feature. Screensaver 4.0 adds the following feature:
@@ -42,23 +42,23 @@ One day, Professor Felleisen was walking up the stairs in WVH, talking to one of
 
 Your job is to clean up this mess. Deliver a file named class-lists.rkt that provides the following functions:
 
-                 ;; felleisen-roster : ListOfSlip -> ListOfSlip  
-                 ;; GIVEN: a list of slips  
-                 ;; RETURNS: a list of slips containing all the students in Professor  
-                 ;; Felleisen's class, without duplication.  
+     ;; felleisen-roster : ListOfSlip -> ListOfSlip  
+     ;; GIVEN: a list of slips  
+     ;; RETURNS: a list of slips containing all the students in Professor  
+     ;; Felleisen's class, without duplication.  
 
-                 ;; shivers-roster: ListOfSlip -> ListOfSlip  
-                 ;; GIVEN: a list of slips  
-                 ;; RETURNS: a list of slips containing all the students in Professor  
-                 ;; Shivers' class, without duplication.  
-                 ;; Here is the beginning of the data definition for ListOfSlip:  
+     ;; shivers-roster: ListOfSlip -> ListOfSlip  
+     ;; GIVEN: a list of slips  
+     ;; RETURNS: a list of slips containing all the students in Professor  
+     ;; Shivers' class, without duplication.  
+     ;; Here is the beginning of the data definition for ListOfSlip:  
 
-                 (define-struct slip (color name1 name2))  
-                 A Slip is a (make-slip Color String String)  
+     (define-struct slip (color name1 name2))  
+     A Slip is a (make-slip Color String String)  
 
-                 A Color is one of  
-                 -- "yellow"  
-                 -- "blue"  
+     A Color is one of  
+     -- "yellow"  
+     -- "blue"  
 As mentioned before, the professors are confused about first names and last names, so (make-slip "yellow" "Wang" "Xi") and (make-slip "yellow" "Xi" "Wang") represent the same student in Professor Felleisen's class. The phrase "without duplication" in the purpose statements above means that your function should return a list in which this student is represented only once.
 
 Be sure to finish the data definitions I've started above, and to provide make-slip, slip-color, slip-name1 and slip-name2.
