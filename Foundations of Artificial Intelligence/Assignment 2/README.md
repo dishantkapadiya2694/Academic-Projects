@@ -122,7 +122,7 @@ python pacman.py -p ReflexAgent -l testClassic
 ```
 Try out your reflex agent on the default mediumClassic layout with one ghost or two (and animation off to speed up the display):
 
-```python
+```
 python pacman.py --frameTime 0 -p ReflexAgent -k 1
 python pacman.py --frameTime 0 -p ReflexAgent -k 2
 ```
